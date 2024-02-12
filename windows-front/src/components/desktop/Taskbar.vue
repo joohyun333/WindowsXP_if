@@ -1,7 +1,7 @@
 <template>
   <div class="taskbar flex justify-start items-center z-[999]">
     <div @click="clickStart" class="taskbar_start flex items-center justify-center gap-1 rounded-r-lg"
-         :class="{ active: store.state.isClickStartButton}" title="시작하려면 여기를 클립하십시오.">
+         :class="{ active: store.state.startMenu}" title="시작하려면 여기를 클립하십시오.">
       <img draggable="false" class="taskbar_start_logo !w-5 !h-5" src="/src/assets/wallpaper/xp.png" alt="window logo">
         <p class="tracking-wider pr-2">시작</p>
     </div>

@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import WallPaper from './components/desktop/WallPaper.vue'
+import WallPaper from './components/WallPaper.vue'
 </script>
 
 <style scoped>

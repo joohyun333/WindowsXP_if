@@ -12,8 +12,18 @@ onMounted(() => {
     const time_date = new Date()
     let hours = time_date.getHours();
     let minutes = time_date.getMinutes();
+    if (minutes < 10){
+      minutes = ":0" + minutes
+    }else{
+      minutes = ":" + minutes
+    }
     let ampm = hours >= 12 ? '오후' : '오전';
-    time.value = ampm + " " + (minutes < 10 ? hours + ":0" + minutes : hours % 12 + ":"+ minutes)
+    if (hours > 12){
+      hours %= 12
+    }else if (hours === 0){
+      hours = 12
+    }
+    time.value = ampm + " " +  hours + minutes
   }, 100);
 })
 </script>

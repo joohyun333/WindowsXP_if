@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.isClickStartButton" class="w-96 h-[480px] select-none rounded-t-lg  bg-white fixed bottom-[34px] left-0 z-[9999] flex flex-col items-center justify-between">
+  <div v-if="store.state.startMenu" class="w-96 h-[480px] select-none rounded-t-lg  bg-white fixed bottom-[34px] left-0 z-[999] flex flex-col items-center justify-between">
 
     <div class="start_menu shrink-0 rounded-t-lg flex items-center h-16 select-none text-white justify-start gap-2 pl-2 w-full">
       <div class="border border-white w-12 h-12 rounded-md overflow-hidden">
@@ -137,9 +137,9 @@
         </div>
         <p>로그오프(L)</p>
       </div>
-      <div class="flex text-white font-thin text-xs items-center justify-center group gap-1 ">
+      <div @click="clickPowerOffButton" class="flex text-white font-thin text-xs items-center justify-center group gap-1 ">
         <div class="bg-white rounded-sm">
-          <img draggable="false"  class="w-6 h-6 group-active:opacity-70 " src="/src/assets/wallpaper/startmenu/poweroff.png" alt="poweroff">
+          <img draggable="false" class="w-6 h-6 group-active:opacity-70 " src="/src/assets/wallpaper/startmenu/poweroff.png" alt="poweroff">
         </div>
         <p>컴퓨터 끄기(U)</p>
       </div>
@@ -149,7 +149,9 @@
 
 <script setup>
 import store from "../../store/store.js";
-
+function clickPowerOffButton(){
+  store.commit('clickPowerOff');
+}
 </script>
 
 <style scoped>
