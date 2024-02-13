@@ -9,8 +9,10 @@
 
     <div class="taskbar_end ml-auto h-full w-fit text-white border box-border border-t-[#075dca] border-b-[#0a5bc6] border-r-transparent border-l-black flex items-center justify-end px-2 pt-1 pl-6 text-sm gap-1">
       <img class="w-5" src="/src/assets/wallpaper/taskbar_end/not_connect.png" draggable="false" alt="icon">
-      <img @click="voiceIcon = !voiceIcon" class="w-5" :src="changeIcon(voiceIcon, 'voice.png', 'not_voice.png')" draggable="false" alt="icon">
-      <img class="w-5" src="/src/assets/wallpaper/taskbar_end/x.png" draggable="false" alt="icon">
+      <img @click="voiceIcon = !voiceIcon" class="w-5" v-if="voiceIcon===true" src="/src/assets/wallpaper/taskbar_end/voice.png" draggable="false" alt="icon">
+      <img @click="voiceIcon = !voiceIcon" class="w-5" v-if="voiceIcon===false" src="/src/assets/wallpaper/taskbar_end/not_voice.png" draggable="false" alt="icon">
+      <img @click="protectIcon = !protectIcon" class="w-5" v-if="protectIcon===false"  src="/src/assets/wallpaper/taskbar_end/x.png" draggable="false" alt="icon">
+      <img @click="protectIcon = !protectIcon" class="w-5" v-if="protectIcon===true" src="/src/assets/wallpaper/taskbar_end/o.png" draggable="false" alt="icon">
       <Clock/>
     </div>
   </div>
@@ -21,17 +23,10 @@ import store from "../../store/store.js";
 import Clock from "./Clock.vue";
 import {ref} from "vue";
 
-const iconPath = "/src/assets/wallpaper/taskbar_end/"
 const voiceIcon = ref(false)
+const protectIcon = ref(false)
 function clickStart(){
   store.commit('clickStartButton');
-}
-function changeIcon(onOff, onIcon, offIcon){
-  if (onOff === true){
-    return iconPath + onIcon
-  }else{
-    return iconPath + offIcon
-  }
 }
 
 </script>
