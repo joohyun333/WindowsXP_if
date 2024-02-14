@@ -1,23 +1,19 @@
 <template>
-  <div v-if="store.state.powerOn === false" class="bg-[#bbb] fixed top-0 left-0 z-[99999] mid_background w-screen h-screen text-white">
-    <div class="top-0 left-0  w-full h-full flex flex-col justify-center items-center">
-<!--      <div class="w-32 h-32 button" @click="onOff = !onOff" :class="{active: onOff}"></div>-->
-      <div class="buttons-container">
-        <button class="button" type="button">
-          <span class="button-inside">Record</span>
-        </button>
-        <button class="button" type="button">
-          <span class="button-inside dark-gray">Sound</span>
-        </button>
-        <button class="button" type="button">
-          <span class="button-inside white">Erase</span>
-        </button>
-        <button class="button" type="button">
-          <span class="button-inside light-gray">Shift</span>
-        </button>
-        <button class="button" type="button">
-          <span class="button-inside gray">Play</span>
-        </button>
+  <div v-if="store.state.powerOn === false" class="bg-[#bbb] fixed top-0 left-0 z-[99999] w-screen h-screen">
+    <div class="top-0 left-0  w-full h-full flex flex-col justify-center items-center NanumGothic-ExtraBold">
+      <div class="flex flex-col h-28 Dos-vga">
+        <div class="input bg-[#bbb] w-72 h-12 border-0 outline-0 rounded-md text-m px-1.5"
+             :class="{ 'text' : command !== ''}" v-html="command"
+        />
+      </div>
+      <div v-for="key_arr in keyBoard" class="flex flex-wrap gap-2 pb-2">
+        <div v-for="text in key_arr" class="button rounded bg-[#000000]" type="button">
+          <span :class="keyClass(text.key_name, text.color)"  v-html="text.key_name"
+                :style="{ 'width' : text.size + 'rem'}"
+                @click="clickKeyBoard(text.key_name)"
+          >
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -25,25 +21,106 @@
 
 <script setup>
 import store from "../../store/store.js";
-import {onMounted, ref} from "vue";
-const onOff = ref(false)
+import {onMounted, onUnmounted, ref} from "vue";
+const command = ref('')
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown);
+});
+
+function keyClass(keyName, color){
+  return 'button-inside ' + color + ' key-' + keyName;
+}
+function clickKeyBoard(keys){
+  if (keys === '⬅'){
+    command.value = command.value.slice(0, -1)
+  }else if (keys === 'space'){
+    command.value += ' '
+  }else if (keys === 'connect'){
+    if (command.value === 'hello world'){
+      console.log('정답')
+    }
+  }else{
+    command.value += keys
+  }
+}
+
+function handleKeyDown(){
+  const keyPressed = event.key;
+  const button = document.querySelector(`.button .key-${keyPressed}`);
+  console.log(button)
+  if (button) {
+    button.classList.add('active');
+    setTimeout(() => {
+      button.classList.remove('active');
+    }, 900);
+  }
+}
+const keyBoard = [
+    [
+        {key_name: '1', size: '3', color: 'white'},
+        {key_name: '2', size: '3', color: 'white'},
+        {key_name: '3', size: '3', color: 'white'},
+        {key_name: '4', size: '3', color: 'white'},
+        {key_name: '5', size: '3', color: 'white'},
+        {key_name: '6', size: '3', color: 'white'},
+        {key_name: '7', size: '3', color: 'white'},
+        {key_name: '8', size: '3', color: 'white'},
+        {key_name: '9', size: '3', color: 'white'},
+        {key_name: '0', size: '3', color: 'white'},
+    ],
+    [
+        {key_name: 'q', size: '3', color: 'white'},
+        {key_name: 'w', size: '3', color: 'white'},
+        {key_name: 'e', size: '3', color: 'white'},
+        {key_name: 'r', size: '3', color: 'white'},
+        {key_name: 't', size: '3', color: 'white'},
+        {key_name: 'y', size: '3', color: 'white'},
+        {key_name: 'u', size: '3', color: 'white'},
+        {key_name: 'i', size: '3', color: 'white'},
+        {key_name: 'o', size: '3', color: 'white'},
+        {key_name: 'p', size: '3', color: 'white'},
+    ],
+    [
+        {key_name: 'a', size: '3', color: 'white'},
+        {key_name: 's', size: '3', color: 'white'},
+        {key_name: 'd', size: '3', color: 'white'},
+        {key_name: 'f', size: '3', color: 'white'},
+        {key_name: 'g', size: '3', color: 'white'},
+        {key_name: 'h', size: '3', color: 'white'},
+        {key_name: 'j', size: '3', color: 'white'},
+        {key_name: 'k', size: '3', color: 'white'},
+        {key_name: 'l', size: '3', color: 'white'},
+    ],
+    [
+        {key_name: 'z', size: '3', color: 'white'},
+        {key_name: 'x', size: '3', color: 'white'},
+        {key_name: 'c', size: '3', color: 'white'},
+        {key_name: 'v', size: '3', color: 'white'},
+        {key_name: 'b', size: '3', color: 'white'},
+        {key_name: 'n', size: '3', color: 'white'},
+        {key_name: 'm', size: '3', color: 'white'},
+    ],
+    [
+        {key_name: 'space', size: '10', color: 'dark-gray'},
+        {key_name: '⬅', size: '7', color: 'gray'},
+        {key_name: 'connect', size: '7', color: ''},
+    ],
+]
 </script>
 <style scoped>
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 26em;
-  gap: 1em;
-}
 
 .button {
   border: 0.125em solid transparent;
-  border-radius: 0.125em;
-  background-color: #010101;
   box-shadow: 0.0625em 0.0625em 0.0625em rgba(255, 255, 255, 0.6);
-  width: 6em;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
 .button-inside {
@@ -73,12 +150,6 @@ const onOff = ref(false)
   background-color: var(--background-color-active);
   box-shadow: inset 0 0 0.25em #000, inset 0.0625em 0.0625em 0.0625em transparent, inset -0.0625em -0.0625em 0.0625em transparent, 0.125em 0.125em 0.25em transparent;
 }
-.button-inside.dark-gray {
-  --background-color: #353535;
-  --background-color-active: #313030;
-  --light-shadow-color: #a7a7a7;
-  --dark-shadow-color: #1c1c1c;
-}
 .button-inside.white {
   --background-color: #cfcbca;
   --background-color-active: #b9b5b3;
@@ -86,6 +157,14 @@ const onOff = ref(false)
   --dark-shadow-color: #646464;
   --text-color: #010101;
 }
+
+.button-inside.dark-gray {
+  --background-color: #353535;
+  --background-color-active: #313030;
+  --light-shadow-color: #a7a7a7;
+  --dark-shadow-color: #1c1c1c;
+}
+
 .button-inside.light-gray {
   --background-color: #bcbcbc;
   --background-color-active: #b1adad;
@@ -97,5 +176,16 @@ const onOff = ref(false)
   --background-color-active: #575454;
   --light-shadow-color: #b8b7b5;
   --dark-shadow-color: #383838;
+}
+
+.input {
+  box-shadow: 3px 3px 10px rgba(147,145,145,1), -1px -1px 6px rgba(225,255,225, 0.8);
+}
+
+.input.text {
+  border: 2px solid transparent;
+  background-color: #171717;
+  color: #55FF55;
+  box-shadow: 3px 3px 10px rgba(69,68,68,1), -1px -1px 6px rgba(0,0,0,0.5), inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(69,68,68,0.5);
 }
 </style>

@@ -17,6 +17,11 @@
   src: url("/src/Fonts/Nanum_Gothic/NanumGothic-ExtraBold.ttf");
 }
 
+@font-face {
+  font-family: "Dos-vga";
+  src: url("/src/Fonts/Perfect Dos VGA 437/Perfect DOS VGA 437 Win.ttf");
+}
+
 html {
   background-image: url("/src/assets/wallpaper/basic.jpg");
   background-position: center center;
@@ -38,6 +43,9 @@ html {
   }
   .NanumGothic-ExtraBold{
     font-family: NanumGothic-ExtraBold, serif;
+  }
+  .Dos-vga{
+    font-family: Dos-vga, serif;
   }
 }
 
