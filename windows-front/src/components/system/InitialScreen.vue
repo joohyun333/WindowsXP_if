@@ -1,14 +1,14 @@
 <template>
   <div v-if="store.state.powerOn === false" class="bg-[#bbb] fixed top-0 left-0 z-[99999] w-screen h-screen">
-    <div class="top-0 left-0  w-full h-full flex flex-col justify-center items-center NanumGothic-ExtraBold">
+    <div class="top-0 left-0  w-full h-full flex flex-col justify-center items-center NanumGothic-ExtraBold" title="hello world 를 입력하세요.">
       <div class="flex flex-col h-28 Dos-vga">
-        <div class="input bg-[#bbb] w-72 h-12 border-0 outline-0 rounded-md text-m px-1.5"
+        <div class="input bg-[#bbb] w-72 h-12 border-0 outline-0 rounded-md text-m px-1.5 cursor"
              :class="{ 'text' : command !== ''}" v-html="command"
         />
       </div>
       <div v-for="key_arr in keyBoard" class="flex flex-wrap gap-2 pb-2">
-        <div v-for="text in key_arr" class="button rounded bg-[#000000]" type="button">
-          <span :class="keyClass(text.key_name, text.color)"  v-html="text.key_name"
+        <div v-for="text in key_arr" :class="'button rounded bg-[#000000] key-' + text.key_name" type="button">
+          <span :class="'button-inside ' + text.color"  v-html="text.key_name"
                 :style="{ 'width' : text.size + 'rem'}"
                 @click="clickKeyBoard(text.key_name)"
           >
@@ -31,33 +31,40 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown);
 });
-
-function keyClass(keyName, color){
-  return 'button-inside ' + color + ' key-' + keyName;
-}
 function clickKeyBoard(keys){
-  if (keys === '⬅'){
+  if (keys === 'space') {
+    if (command.value.length < 30) {
+      command.value += ' '
+    }
+  }else if (keys === '⬅') {
     command.value = command.value.slice(0, -1)
-  }else if (keys === 'space'){
-    command.value += ' '
-  }else if (keys === 'connect'){
-    if (command.value === 'hello world'){
+  }else if (keys === 'connect') {
+    if (command.value === 'hello world') {
       console.log('정답')
     }
-  }else{
-    command.value += keys
+  }else {
+    if (command.value.length < 30) {
+      command.value += keys
+    }
   }
 }
 
 function handleKeyDown(){
-  const keyPressed = event.key;
-  const button = document.querySelector(`.button .key-${keyPressed}`);
-  console.log(button)
+  let keyPressed = event.key.toLowerCase();
+  if (keyPressed === ' '){
+    keyPressed = 'space'
+  }else if (keyPressed === 'backspace'){
+    keyPressed = '⬅'
+  }else if (keyPressed === 'enter' ){
+    keyPressed = 'connect'
+  }
+  const button = document.querySelector(`.key-${keyPressed}`);
   if (button) {
     button.classList.add('active');
+    clickKeyBoard(keyPressed)
     setTimeout(() => {
       button.classList.remove('active');
-    }, 900);
+    }, 80);
   }
 }
 const keyBoard = [
@@ -145,6 +152,7 @@ const keyBoard = [
   transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.25, 0.5, 0.5, 1);
 }
+.button.active .button-inside,
 .button:active .button-inside {
   transform: scale(0.98);
   background-color: var(--background-color-active);

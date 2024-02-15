@@ -7,7 +7,6 @@ export default createStore({
         powerOffProgress : false,
         powerOn: true,
         powerAlert: "로그오프 중...",
-
     },
     getters:{
 
