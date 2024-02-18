@@ -2,20 +2,14 @@
   <StartMenu/>
   <TaskBar/>
   <SystemOffMenu/>
-  <SystemOff/>
-  <InitialScreen/>
-  <LoadingOn/>
-  <SystemOn/>
+  <system-on-off-components/>
 </template>
 
 <script setup>
-import TaskBar from "./desktop/Taskbar.vue";
-import StartMenu from "./desktop/StartMenu.vue";
+import TaskBar from "./desktop/tasker/Taskbar.vue";
+import StartMenu from "./desktop/tasker/StartMenu.vue";
 import SystemOffMenu from "./system/SystemOffMenu.vue"
-import SystemOff from "./system/SystemOff.vue";
-import InitialScreen from './system/InitialScreen.vue'
-import LoadingOn from "./system/LoadingOn.vue";
-import SystemOn from "./system/SystemOn.vue";
+import SystemOnOffComponents from "./system/SystemOnOffComponents.vue";
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.powerOnLoading" class="z-[9999] flex flex-col items-center justify-center bg-black select-none w-screen h-screen fixed top-0 left-0 Roboto-Regular text-white">
+  <div class="flex flex-col items-center justify-center bg-black select-none w-screen h-screen fixed top-0 left-0 Roboto-Regular text-white">
     <div class=" w-96 flex items-center justify-center flex-col">
       <div class="logos">
         <div id="line1" class="flex items-end justify-center gap-3">

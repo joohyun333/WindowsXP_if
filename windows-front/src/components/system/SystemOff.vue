@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.powerOffProgress" class="bg-[#00309C] fixed top-0 left-0 py-20 z-[99999] w-screen h-screen select-none">
+  <div class="bg-[#00309C] fixed top-0 left-0 py-20 w-screen h-screen select-none">
     <div class="top-0 left-0 mid_background justify-between w-full h-full flex flex-col items-center origin-top-left">
       <div class="w-full h-[3px] from-transparent via-white to-transparent bg-gradient-to-r"></div>
 

@@ -11,7 +11,7 @@
       <img class="w-5" src="/src/assets/wallpaper/taskbar_end/not_connect.png" draggable="false" alt="icon">
       <img @click="voiceIcon = !voiceIcon" class="w-5" v-if="voiceIcon===true" src="/src/assets/wallpaper/taskbar_end/voice.png" draggable="false" alt="icon">
       <img @click="voiceIcon = !voiceIcon" class="w-5" v-if="voiceIcon===false" src="/src/assets/wallpaper/taskbar_end/not_voice.png" draggable="false" alt="icon">
-      <img @click="protectIcon = !protectIcon" class="w-5" v-if="protectIcon===false"  src="/src/assets/wallpaper/taskbar_end/x.png" draggable="false" alt="icon">
+      <img @click="protectIcon = !protectIcon" class="w-5" v-if="protectIcon===false" src="/src/assets/wallpaper/taskbar_end/x.png" draggable="false" alt="icon">
       <img @click="protectIcon = !protectIcon" class="w-5" v-if="protectIcon===true" src="/src/assets/wallpaper/taskbar_end/o.png" draggable="false" alt="icon">
       <Clock/>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import store from "../../store/store.js";
+import store from "../../../store/store.js";
 import Clock from "./Clock.vue";
 import {ref} from "vue";
 

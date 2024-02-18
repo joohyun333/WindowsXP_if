@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.powerOn === false" class="bg-[#bbb] fixed top-0 left-0 z-[99999] w-screen h-screen">
+  <div class="bg-[#bbb] fixed top-0 left-0 w-screen h-screen">
     <div class="top-0 left-0  w-full h-full flex flex-col justify-center items-center NanumGothic-ExtraBold" title="hello world 를 입력하세요.">
       <div class="flex flex-col h-28 Dos-vga">
         <div class="input bg-[#bbb] w-72 h-12 border-0 outline-0 rounded-md text-m px-1.5 cursor"

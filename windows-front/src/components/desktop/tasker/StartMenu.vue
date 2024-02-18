@@ -133,7 +133,7 @@
     <div class="start_menu_footer shrink-0 h-10 self-end w-full flex items-center justify-end px-2 gap-2">
       <div class="flex text-white font-thin text-xs items-center justify-center group gap-1 ">
         <div class="bg-white rounded-sm">
-          <img draggable="false"  class="w-6 h-6 group-active:opacity-70 " src="/src/assets/wallpaper/startmenu/logoff.png" alt="logoff">
+          <img draggable="false" class="w-6 h-6 group-active:opacity-70 " src="/src/assets/wallpaper/startmenu/logoff.png" alt="logoff">
         </div>
         <p>로그오프(L)</p>
       </div>
@@ -148,7 +148,7 @@
 </template>
 
 <script setup>
-import store from "../../store/store.js";
+import store from "../../../store/store.js";
 function clickPowerOffButton(){
   store.commit('clickPowerOff');
 }
