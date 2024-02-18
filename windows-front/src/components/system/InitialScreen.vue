@@ -40,7 +40,7 @@ function clickKeyBoard(keys){
     command.value = command.value.slice(0, -1)
   }else if (keys === 'connect') {
     if (command.value === 'hello world') {
-      console.log('정답')
+      store.commit('powerOn');
     }
   }else {
     if (command.value.length < 30) {

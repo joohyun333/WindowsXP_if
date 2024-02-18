@@ -5,6 +5,8 @@ export default createStore({
         startMenu : false,
         powerOffMenu : false,
         powerOffProgress : false,
+        powerOnLoading : false,
+        powerOnProgress : false,
         powerOn: true,
         powerAlert: "로그오프 중...",
     },
@@ -26,9 +28,21 @@ export default createStore({
                 state.powerAlert = "시스템 종료 중...";
                 setTimeout(() => {
                     state.powerOn = false;
+                    state.powerOffProgress = false;
                 }, 3000);
             }, 3000);
-        }
+        },
+        powerOn(state){
+            state.powerOn=true
+            state.powerOnLoading = true
+            setTimeout(() => {
+                state.powerOnLoading = false;
+                state.powerOnProgress = true;
+                setTimeout(() => {
+                    state.powerOnProgress = false;
+                }, 2000);
+            }, 3000);
+        },
     },
     actions:{
 
