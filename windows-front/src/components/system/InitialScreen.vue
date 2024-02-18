@@ -41,6 +41,7 @@ function clickKeyBoard(keys){
   }else if (keys === 'connect') {
     if (command.value === 'hello world') {
       store.commit('powerOn');
+      command.value = '';
     }
   }else {
     if (command.value.length < 30) {

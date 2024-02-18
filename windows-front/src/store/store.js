@@ -29,6 +29,7 @@ export default createStore({
                 setTimeout(() => {
                     state.powerOn = false;
                     state.powerOffProgress = false;
+                    state.powerAlert = "로그오프 중...";
                 }, 3000);
             }, 3000);
         },
