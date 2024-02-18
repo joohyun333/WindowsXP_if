@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.powerOffMenu" class="w-screen select-none h-screen z-[9999] backdrop-saturate-anim fixed top-0 left-0 flex items-center justify-center ">
+  <div class="w-screen select-none h-screen backdrop-saturate-anim fixed top-0 left-0 flex items-center justify-center ">
     <div class="border border-black w-[390px] h-[180px] bg-[#003399] shrink-0 flex flex-col ">
       <div class="text-white flex items-center justify-between px-2 h-[70px]">
         <p class="font-medium text-lg p-1">시스템 종료</p>

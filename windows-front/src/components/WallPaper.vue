@@ -1,15 +1,11 @@
 <template>
-  <StartMenu/>
-  <TaskBar/>
-  <SystemOffMenu/>
+  <Desktop/>
   <system-on-off-components/>
 </template>
 
 <script setup>
-import TaskBar from "./desktop/tasker/Taskbar.vue";
-import StartMenu from "./desktop/tasker/StartMenu.vue";
-import SystemOffMenu from "./system/SystemOffMenu.vue"
 import SystemOnOffComponents from "./system/SystemOnOffComponents.vue";
+import Desktop from "./desktop/Desktop.vue";
 </script>
 
 <style scoped>

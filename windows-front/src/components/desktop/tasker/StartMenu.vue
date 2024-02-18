@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.startMenu" class="w-96 h-[480px] select-none rounded-t-lg  bg-white fixed bottom-[34px] left-0 z-[999] flex flex-col items-center justify-between">
+  <div class="w-96 h-[480px] select-none rounded-t-lg  bg-white fixed bottom-[34px] left-0 flex flex-col items-center justify-between">
 
     <div class="start_menu shrink-0 rounded-t-lg flex items-center h-16 select-none text-white justify-start gap-2 pl-2 w-full">
       <div class="border border-white w-12 h-12 rounded-md overflow-hidden">
