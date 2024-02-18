@@ -24,6 +24,8 @@ export default createStore({
         powerOff(state){
             state.powerOffMenu = false;
             state.powerOffProgress = true;
+            let audio = new Audio('../src/assets/sound/shutdown.wav')
+            audio.play().then(r => {})
             setTimeout(() => {
                 state.powerAlert = "시스템 종료 중...";
                 setTimeout(() => {
@@ -37,6 +39,8 @@ export default createStore({
             state.powerOn=true
             state.powerOnLoading = true
             setTimeout(() => {
+                let audio = new Audio('../src/assets/sound/startup.wav')
+                audio.play().then(r => {})
                 state.powerOnLoading = false;
                 state.powerOnProgress = true;
                 setTimeout(() => {
