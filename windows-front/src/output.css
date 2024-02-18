@@ -1407,6 +1407,11 @@ button:focus {
   background-color: rgb(56 189 248 / 0.7);
 }
 
+.hover\:bg-\[\#316AC5\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(49 106 197 / var(--tw-bg-opacity));
+}
+
 .hover\:\!text-white:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
