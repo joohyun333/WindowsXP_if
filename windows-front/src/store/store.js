@@ -2,13 +2,17 @@ import { createStore } from "vuex";
 
 export default createStore({
     state: {
-        startMenu : false,
-        powerOffMenu : false,
-        powerOffProgress : false,
-        powerOnLoading : false,
-        powerOnProgress : false,
-        powerOn: true,
-        powerAlert: "로그오프 중...",
+        powerOn: true, // 전원
+        startMenu : false, //시작 버튼 메뉴
+
+        powerOffMenu : false, // 시스템 종료 선택 메뉴
+        powerOffProgress : false, //시스템 종료
+        powerAlert: "로그오프 중...", // 시스템 종료 알림
+
+        powerOnLoading : false, // 시스템 시작 로딩 바
+        powerOnProgress : false, // 시스템 시작 화면
+
+        startProgram:"" // 시작할 프로그램
     },
     getters:{
 

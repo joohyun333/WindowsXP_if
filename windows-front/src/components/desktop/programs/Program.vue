@@ -1,6 +1,6 @@
 <template>
-  <div :id="program_info.id" class="fixed program group select-none border m-6 flex items-center justify-start flex-col text-center border-transparent w-16 h-fit left-0 " :class="'top-' + position*24" >
-    <img draggable="false"  class="h-10 select-none pointer-events-none" :src='program_info.path' :alt='program_info.alt'>
+  <div :id="program_info.id" class="fixed program group select-none border m-6 flex items-center justify-start flex-col text-center border-transparent w-16 h-fit left-0 overlay_filter " :class="'top-' + position*24" >
+    <img draggable="false"  class="h-10 select-none pointer-events-none " :class="{'opacity-60' : clickedProgram===program_info.id}" :src='program_info.path' :alt='program_info.alt'>
     <p class="text-xs select-none pointer-events-none border-transparent border-[1px] text-white icon-shadow group-hover:h-fit h-5 w-full px-[1px] truncate " >{{program_info.name}}</p>
   </div>
 </template>
@@ -27,7 +27,9 @@ defineProps(['program_info','position','clickedProgram'])
 .icon-shadow{
   text-shadow: 1px 1px 1px black;
 }
+
 .overlay_filter{
-  filter: brightness(1.3) invert(0.17) saturate(2.6) sepia(0.25) url('#squiggly-1');
+  filter: drop-shadow(0px 0px blue);
 }
+
 </style>
