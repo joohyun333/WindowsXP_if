@@ -1,62 +1,71 @@
 <template>
   <div>
-    <Program v-for="(program, index) in programs" :program_info="program" :position="index" :clickedProgram="clickedProgram" :key="program.id" @click="selectProgram($event)" v-on:dblclick="" />
+    <div class="flex select-none w-screen h-screen fixed top-0 left-0" @click="clickedProgram = ''" ></div>
+    <Program v-for="(program, index) in programs" @click="clickedProgram = program.id" :program_info="program" :position="index" :clickedProgram="clickedProgram" :key="program.id" v-on:dblclick="" />
   </div>
 </template>
 
 <script setup>
 import Program from "./Program.vue";
-import {onMounted, ref} from "vue";
+import {ref, watch} from "vue";
+let clickedProgram = ref('');
 const programs = [
-  {'id':'recycleBin', 'name':'My Computer', 'path':'../src/assets/wallpaper/program/recycleBin.png', 'alt':'recycleBin-logo'},
+  {'id':'recycleBin', 'name':'휴지통', 'path':'../src/assets/wallpaper/program/recycleBin.png', 'alt':'recycleBin-logo'},
   {'id':'myComputer', 'name':'내 컴퓨터', 'path':'../src/assets/wallpaper/program/myComputer.png', 'alt':'myComputer-logo'},
   {'id':'internet', 'name':'인터넷', 'path':'../src/assets/wallpaper/program/internet.png', 'alt':'internet-logo'},
 ]
 
-const clickedProgram = ref("")
-const selectProgram =(event)=>{
-  clickedProgram.value=event.target.id
-  let lastChild = event.target.lastChild;
-  // An Element node like <p> or <div>.
-  if (lastChild.nodeType === Node.ELEMENT_NODE) {
-    lastChild.classList.add('program-clicked');
-  }
-}
-
-onMounted(()=>{
-
-  document.addEventListener('mousedown',    function(event){
-    const programs = document.querySelectorAll(".program")
-    const programsNames = document.querySelectorAll(".program p")
-    if(event.target.localName==="html"){
-      programs.forEach((item)=>{
-
-        item.classList.remove("select")
-        item.classList.remove("selected")
-        clickedProgram.value=""
-      })
-
-      programsNames.forEach((item)=>{
-        item.classList.remove("program-clicked")
-      })
+watch(clickedProgram,(newClicked,oldClicked)=>{
+  const newSelected = document.getElementById(newClicked)
+  const oldSelected = document.getElementById(oldClicked)
+  const cancelSelected = document.getElementsByClassName('program-clicked-non')
+  const cancelFilter = document.getElementsByClassName('overlay_filter')
+  let i = 0
+  if(cancelSelected.length > 0){
+    for(i = 0; i < cancelSelected.length; i++){
+      cancelSelected.item(i).classList.remove('program-clicked-non')
     }
-  })
-})
+  }
+  if(cancelFilter.length > 0){
+    for(i = 0; i < cancelFilter.length; i++){
+      cancelFilter.item(i).classList.remove('overlay_filter')
+    }
+  }
 
+  if(newSelected){
+    if(oldSelected != null){
+      let firstChild = oldSelected.firstChild; //img
+      let lastChild = oldSelected.lastChild; //program_name
+      if (firstChild.tagName === 'IMG') {
+        firstChild.classList.remove("overlay_filter");
+      }
+      if (lastChild.nodeType === Node.ELEMENT_NODE) {
+        lastChild.classList.remove("program-clicked", "h-fit");
+      }
+    }
+    let firstChild = newSelected.firstChild; //img
+    let lastChild = newSelected.lastChild; //program_name
+    if (firstChild.tagName === 'IMG') {
+      firstChild.classList.add("overlay_filter");
+    }
+    if (lastChild.nodeType === Node.ELEMENT_NODE) {
+      lastChild.classList.add("program-clicked", "h-fit");
+    }
+  }else{
+    if(oldSelected != null){
+      let firstChild = oldSelected.firstChild; //img
+      let lastChild = oldSelected.lastChild; //program_name
+      if (firstChild.tagName === 'IMG') {
+        firstChild.classList.remove("overlay_filter");
+      }
+      if (lastChild.nodeType === Node.ELEMENT_NODE) {
+        lastChild.classList.remove("program-clicked");
+        lastChild.classList.add("program-clicked-non");
+      }
+    }
+  }
+})
 </script>
 
 <style scoped>
-.program-clicked{
-  text-overflow: initial !important;
-  overflow: visible !important;
-  white-space: normal !important;
-}
-.selected {
-  border: 1px black dotted;
-}
-
-.select{
-  @apply
-  !border-teal-400 !bg-sky-400/70
-}
 </style>
