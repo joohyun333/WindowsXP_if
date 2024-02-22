@@ -7,7 +7,7 @@
              :position="index"
              :clickedProgram="clickedProgram"
              :key="program.id"
-             v-on:dblclick="store.state.startProgram = program.id" />
+             v-on:dblclick="store.state.startProgram = program" />
   </div>
 </template>
 

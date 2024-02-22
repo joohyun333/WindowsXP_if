@@ -12,7 +12,7 @@ export default createStore({
         powerOnLoading : false, // 시스템 시작 로딩 바
         powerOnProgress : false, // 시스템 시작 화면
 
-        startProgram:"" // 시작할 프로그램
+        startProgram:{} // 시작할 프로그램
     },
     getters:{
 
