@@ -137,7 +137,7 @@
         </div>
         <p>로그오프(L)</p>
       </div>
-      <div @click="clickPowerOffButton" class="flex text-white font-thin text-xs items-center justify-center group gap-1 ">
+      <div @click="store.useClickPowerOff" class="flex text-white font-thin text-xs items-center justify-center group gap-1 ">
         <div class="bg-white rounded-sm">
           <img draggable="false" class="w-6 h-6 group-active:opacity-70 " src="/src/assets/wallpaper/startmenu/poweroff.png" alt="poweroff">
         </div>
@@ -148,10 +148,8 @@
 </template>
 
 <script setup>
-import store from "../../../store/store.js";
-function clickPowerOffButton(){
-  store.commit('clickPowerOff');
-}
+import {useScreenStore} from "../../../stores/screen"
+const store = useScreenStore()
 </script>
 
 <style scoped>

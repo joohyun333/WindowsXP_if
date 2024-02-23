@@ -7,14 +7,17 @@
              :position="index"
              :clickedProgram="clickedProgram"
              :key="program.id"
-             v-on:dblclick="store.state.startProgram = program" />
+             v-on:dblclick="store.startProgram.push(program)" />
   </div>
 </template>
 
 <script setup>
-import store from "../../../store/store.js";
+import {useScreenStore} from "../../../stores/screen"
 import Program from "./Program.vue";
 import {ref, watch} from "vue";
+
+const store = useScreenStore();
+
 let clickedProgram = ref('');
 const programs = [
   {'id':'recycleBin', 'name':'휴지통', 'path':'../src/assets/wallpaper/program/recycleBin.png', 'alt':'recycleBin-logo'},

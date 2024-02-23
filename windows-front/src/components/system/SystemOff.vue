@@ -11,7 +11,7 @@
           </div>
           <div class="flex flex-col justify-start items-end">
             <p class="!text-5xl pr-6 relative font-[1000]" >Windows<span class="text-[#FF6821] text-2xl absolute top-0 font-bold">xp</span></p>
-            <h1 class="text-2xl mt-2">{{ store.state.powerAlert }}</h1>
+            <h1 class="text-2xl mt-2">{{ store.powerAlert }}</h1>
           </div>
         </div>
       </div>
@@ -22,7 +22,8 @@
 </template>
 
 <script setup>
-import store from "../../store/store.js";
+import {useScreenStore} from "../../stores/screen"
+const store = useScreenStore()
 </script>
 
 <style scoped>

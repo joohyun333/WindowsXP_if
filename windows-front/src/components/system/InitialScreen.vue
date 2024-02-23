@@ -20,10 +20,10 @@
 </template>
 
 <script setup>
-import store from "../../store/store.js";
+import {useScreenStore} from "../../stores/screen";
 import {onMounted, onUnmounted, ref} from "vue";
+const store = useScreenStore()
 const command = ref('')
-
 onMounted(() => {
   window.addEventListener('keydown', handleKeyDown);
 });
@@ -40,7 +40,7 @@ function clickKeyBoard(keys){
     command.value = command.value.slice(0, -1)
   }else if (keys === 'connect') {
     if (command.value === 'hello world') {
-      store.commit('powerOn');
+      store.usePowerOn();
       command.value = '';
     }
   }else {
