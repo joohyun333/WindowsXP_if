@@ -1,29 +1,24 @@
 <template>
   <div>
     <div class="flex select-none w-screen h-screen fixed top-0 left-0" @click="clickedProgram = ''" ></div>
-    <Program v-for="(program, index) in programs"
-             @click="clickedProgram = program.id"
+    <Program v-for="(program, index) in store.programs"
+             @click="clickedProgram = program.type"
              :program_info="program"
              :position="index"
              :clickedProgram="clickedProgram"
-             :key="program.id"
-             v-on:dblclick="store.startProgram.push(program)" />
+             :key="index"
+             v-on:dblclick="store.useAddProcess(program)"/>
   </div>
 </template>
 
 <script setup>
-import {useScreenStore} from "../../../stores/screen"
+import {useProcessStore} from "../../../stores/process"
 import Program from "./Program.vue";
 import {ref, watch} from "vue";
 
-const store = useScreenStore();
+const store = useProcessStore();
 
 let clickedProgram = ref('');
-const programs = [
-  {'id':'recycleBin', 'name':'휴지통', 'path':'../src/assets/wallpaper/program/recycleBin.png', 'alt':'recycleBin-logo'},
-  {'id':'myComputer', 'name':'내 컴퓨터', 'path':'../src/assets/wallpaper/program/myComputer.png', 'alt':'myComputer-logo'},
-  {'id':'internet', 'name':'인터넷', 'path':'../src/assets/wallpaper/program/internet.png', 'alt':'internet-logo'},
-]
 
 watch(clickedProgram,(newClicked,oldClicked)=>{
   const newSelected = document.getElementById(newClicked)

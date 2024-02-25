@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue";
+import {useProcessStore} from "./process.js";
 
 export const useScreenStore = defineStore('screen', () => {
     const powerOn = ref(true) // 전원
@@ -9,7 +10,6 @@ export const useScreenStore = defineStore('screen', () => {
     const powerAlert = ref("로그오프 중...") // 시스템 종료 알림
     const powerOnLoading = ref(false) // 시스템 시작 로딩 바
     const powerOnProgress = ref(false) // 시스템 시작 화면
-    const startProgram = ref([]) // 실행할 프로그램
 
     function useClickStartButton(){
         startMenu.value = !startMenu.value
@@ -53,7 +53,6 @@ export const useScreenStore = defineStore('screen', () => {
         powerAlert,
         powerOnLoading,
         powerOnProgress,
-        startProgram,
         useClickStartButton,
         useClickPowerOff,
         usePowerOff,
