@@ -1,10 +1,10 @@
 <template>
-  <div :style="style" :id="pro_info.program_info.type" class="z-[990] top-10 shrink-0 absolute" >
-    <div  class="window w-fit bg-[#fcfcfe] truncate min-w-96 min-h-32">
-      <div ref="el" class="title-bar flex shrink-0 item-center justify-between h-8 text-white select-none">
+  <div :style="style" :id="pro_info.program_info.type" class="z-[990] top-10 shrink-0 absolute">
+    <div ref="wh" class="window w-fit bg-[#fcfcfe] truncate">
+      <div  ref="el"  class="title-bar flex shrink-0 item-center justify-between h-8 text-white select-none">
         <div class="flex items-center justify-start truncate">
           <div class="min-w-[22px] w-[22px] h-[22px] pr-[4px] mt-1.5 bg-no-repeat explorer-favicon"></div>
-          <div class="font-semibold items-start text-white truncate" > {{ pro_info.program_info.name }} - Microsoft Internet Explorer</div>
+          <div class="items-start text-white truncate NanumGothic-Bold" > {{ pro_info.program_info.name }} - Microsoft Internet Explorer</div>
         </div>
         <div class="flex items-center justify-center gap-1 ml-2">
           <div class="w-[22px] h-[22px] hover:shadow-inner hover:shadow-white rounded-sm transition-all duration-75 active:opacity-70 box-border ring-0 outline-none active:shadow-black minimize">
@@ -18,6 +18,7 @@
       <div class="p-4 select-none">
         <p>Hello world !</p>
         <p>{{ pro_info.program_info.uuid }}</p>
+        <p>{{ width }} |  {{ height }}</p>
       </div>
     </div>
   </div>
@@ -25,8 +26,8 @@
 
 <script setup>
 import {useProcessStore} from "../../../stores/process"
-import {useDraggable,} from "@vueuse/core";
-import {ref} from "vue";
+import {useDraggable, useElementSize} from "@vueuse/core";
+import {computed, ref, watch} from "vue";
 
 const store = useProcessStore()
 
@@ -34,8 +35,15 @@ const pro_info = defineProps(['program_info'])
 
 const el = ref(null)
 const { x, y, style } = useDraggable(el, {
-  initialValue: { x: 80, y: 80 },
+  initialValue: { x: pro_info.program_info.x, y: pro_info.program_info.y },
 })
+const wh = ref(null)
+const { width, height } = useElementSize(wh)
+
+
+watch([x, y], ([newX, newY], [oldX, oldY, oldWidth, oldHeight]) => {
+  store.useUpdatePosition(pro_info.program_info.uuid, newX, newY)
+});
 </script>
 
 <style scoped>
@@ -57,6 +65,8 @@ const { x, y, style } = useDraggable(el, {
   resize: both;
   padding: 0 0 3px;
   -webkit-font-smoothing: antialiased;
+  width: clamp(24rem, 140vh, 200vh);
+  height: clamp(8rem, 80vh, 97vh);
 }
 .explorer-favicon{
   background-image: url("/src/assets/wallpaper/web/exploerFavicon.png");
