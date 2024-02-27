@@ -1,6 +1,6 @@
 <template>
   <div :style="style" :id="pro_info.program_info.type" class="z-[990] shrink-0 absolute">
-    <div ref="wh" class="window w-fit bg-[#fcfcfe] truncate">
+    <div ref="wh" class="window w-fit bg-[#fcfcfe] truncate" :style="wh_style">
       <div ref="el"  class="title-bar flex shrink-0 item-center justify-between h-8 text-white select-none">
         <div class="flex items-center justify-start truncate">
           <div class="min-w-[22px] w-[22px] h-[22px] pr-[4px] mt-1.5 bg-no-repeat explorer-favicon"></div>
@@ -18,68 +18,53 @@
       <div class="p-4 select-none">
         <p>Hello world !</p>
         <p>{{ pro_info.program_info.uuid }}</p>
-        <p>{{ width }} |  {{ height }}</p>
+        <p>{{ mouse_x }} |  {{ mouse_y }}</p>
       </div>
-      <div class="resizer resizer-r"></div>
-      <div class="resizer resizer-b"></div>
+      <div class="resizer resizer-r" @mousedown="mouseDownHandler"/>
+      <div class="resizer resizer-b" @mousedown="mouseDownHandler"/>
     </div>
   </div>
 </template>
 
 <script setup>
 import {useProcessStore} from "../../../stores/process"
-import {useDraggable, useElementSize} from "@vueuse/core";
+import {useDraggable, useElementSize, useMouseInElement} from "@vueuse/core";
 import {ref} from "vue";
 
 const store = useProcessStore()
 
 const pro_info = defineProps(['program_info'])
 
+// 웹 브라우저 이동
 const el = ref(null)
-const { x, y, style } = useDraggable(el, {
-  initialValue: { x: 200, y: 80 },
-})
+// const { x, y, style } = useDraggable(el, {
+//   initialValue: { x: 80, y: 80 },
+// })
 
+// 웹브라우저 화면 크기 조절
 const wh = ref(null)
+const wh_style = ref(null)
 const { width, height } = useElementSize(wh)
+const { x, y, isOutside } = useMouseInElement(wh)
 
 
-const mouseDownHandler = function (e) {
-  // Get the current mouse position
-  x = e.clientX;
-  y = e.clientY;
-
-  // Calculate the dimension of element
-  const styles = window.getComputedStyle(ele);
-  w = parseInt(styles.width, 10);
-  h = parseInt(styles.height, 10);
-
-  // Attach the listeners to document
-  document.addEventListener('mousemove', mouseMoveHandler);
-  document.addEventListener('mouseup', mouseUpHandler);
-};
-const mouseMoveHandler = function (e) {
-  // How far the mouse has been moved
-  const dx = e.clientX - x;
-  const dy = e.clientY - y;
-
-  // Adjust the dimension of element
-  ele.style.width = (w + dx) + 'px';
-  ele.style.height = (h + dy) + 'px';
-};
-const mouseUpHandler = function () {
-  // Remove the handlers of mousemove and mouseup
-  document.removeEventListener('mousemove', mouseMoveHandler);
-  document.removeEventListener('mouseup', mouseUpHandler);
-};
-
-// Query all resizers
-const resizers = ele.querySelectorAll('.resizer');
-
-// Loop over them
-[].forEach.call(resizers, function (resizer) {
-  resizer.addEventListener('mousedown', mouseDownHandler);
-});
+// function mouseDownHandler() {
+//   const pre_mouse_x = mouse_x
+//   const pre_mouse_y = mouse_y
+//   document.addEventListener('mousemove', mouseMoveHandler);
+//   document.addEventListener('mouseup', mouseUpHandler);
+// };
+// const mouseMoveHandler = function (pre_mouse_x, pre_mouse_y) {
+//   const dx = pre_mouse_x - mouse_x;
+//   const dy = pre_mouse_y - mouse_y;
+//   this.wh_style = ' width: ' + (width + dx) + 'px; height:' +  (height + dy) + 'px';
+//   // wh.style.width = (width + dx) + 'px';
+//   // wh.style.height = (height + dy) + 'px';
+// };
+// const mouseUpHandler = function () {
+//   document.removeEventListener('mousemove', mouseMoveHandler);
+//   document.removeEventListener('mouseup', mouseUpHandler);
+// };
 
 </script>
 
