@@ -82,3 +82,11 @@ button:focus {
 .text-shadow{
   text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, -1px 1px 1px #000000, -1px 1px 1px #000000;
 }
+
+.top-24 {
+  top: 6rem;
+}
+
+.top-48{
+  top: 12rem;
+}

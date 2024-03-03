@@ -18,9 +18,10 @@
       <div class="p-4 select-none">
         <p>Hello world !</p>
         <p>{{ pro_info.program_info.uuid }}</p>
-        <p>{{ mouse_x }} |  {{ mouse_y }}</p>
+        <p>{{ mouse.elementY }} |  {{ mouse.elementX }}</p>
+        <p>{{ mouse }}</p>
       </div>
-      <div class="resizer resizer-r" @mousedown="mouseDownHandler"/>
+      <div class="resizer resizer-r" @mousedown="mouseDownHandler" @mousemove="mouseMoveHandler"/>
       <div class="resizer resizer-b" @mousedown="mouseDownHandler"/>
     </div>
   </div>
@@ -29,42 +30,43 @@
 <script setup>
 import {useProcessStore} from "../../../stores/process"
 import {useDraggable, useElementSize, useMouseInElement} from "@vueuse/core";
-import {ref} from "vue";
-
+import {computed, reactive, ref} from "vue";
 const store = useProcessStore()
 
 const pro_info = defineProps(['program_info'])
 
 // 웹 브라우저 이동
 const el = ref(null)
-// const { x, y, style } = useDraggable(el, {
-//   initialValue: { x: 80, y: 80 },
-// })
+const { x, y, style } = useDraggable(el, {
+  initialValue: { x: 80, y: 80 },
+})
 
 // 웹브라우저 화면 크기 조절
 const wh = ref(null)
-const wh_style = ref(null)
+// const brawer_width =
+const wh_style = computed(() => {
+  return 'width:' + String(parseInt(width.value) + parseInt(dx.value)) + 'px;height:' +  String(parseInt(height.value) + parseInt(dy.value)) + 'px;'
+})
 const { width, height } = useElementSize(wh)
-const { x, y, isOutside } = useMouseInElement(wh)
+const mouse = reactive(useMouseInElement(wh))
 
+const pre_mouse_x = ref(0)
+const pre_mouse_y = ref(0)
+function mouseDownHandler() {
+  pre_mouse_x.value = mouse.elementX
+  pre_mouse_y.value = mouse.elementY
+}
 
-// function mouseDownHandler() {
-//   const pre_mouse_x = mouse_x
-//   const pre_mouse_y = mouse_y
-//   document.addEventListener('mousemove', mouseMoveHandler);
-//   document.addEventListener('mouseup', mouseUpHandler);
-// };
-// const mouseMoveHandler = function (pre_mouse_x, pre_mouse_y) {
-//   const dx = pre_mouse_x - mouse_x;
-//   const dy = pre_mouse_y - mouse_y;
-//   this.wh_style = ' width: ' + (width + dx) + 'px; height:' +  (height + dy) + 'px';
-//   // wh.style.width = (width + dx) + 'px';
-//   // wh.style.height = (height + dy) + 'px';
-// };
-// const mouseUpHandler = function () {
-//   document.removeEventListener('mousemove', mouseMoveHandler);
-//   document.removeEventListener('mouseup', mouseUpHandler);
-// };
+const dx = ref(0)
+const dy = ref(0)
+function mouseMoveHandler() {
+  dx.value = pre_mouse_x.value - mouse.elementX
+  dy.value = pre_mouse_y.value - mouse.elementY
+}
+const mouseUpHandler = function () {
+  document.removeEventListener('mousemove', mouseMoveHandler);
+  document.removeEventListener('mouseup', mouseUpHandler);
+};
 
 </script>
 
