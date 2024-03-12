@@ -1,6 +1,6 @@
 <template>
   <div :style="style" :id="pro_info.program_info.type" class="z-[990] shrink-0 absolute">
-    <div ref="wh" class="window w-fit bg-[#fcfcfe] truncate" :style="wh_style">
+    <div ref="wh" class="window w-fit bg-[#fcfcfe] truncate" :style="{width: browser_height+'px', height:browser_width+'px' }">
       <div ref="el"  class="title-bar flex shrink-0 item-center justify-between h-8 text-white select-none">
         <div class="flex items-center justify-start truncate">
           <div class="min-w-[22px] w-[22px] h-[22px] pr-[4px] mt-1.5 bg-no-repeat explorer-favicon"></div>
@@ -20,8 +20,9 @@
         <p>{{ pro_info.program_info.uuid }}</p>
         <p>{{ mouse.elementY }} |  {{ mouse.elementX }}</p>
         <p>{{ mouse }}</p>
+        <p>{{ browser_height }} |  {{ browser_width }}</p>
       </div>
-      <div class="resizer resizer-r" @mousedown="mouseDownHandler" @mousemove="mouseMoveHandler"/>
+      <div class="resizer resizer-r" @mousedown="mouseDownHandler"/>
       <div class="resizer resizer-b" @mousedown="mouseDownHandler"/>
     </div>
   </div>
@@ -40,28 +41,34 @@ const el = ref(null)
 const { x, y, style } = useDraggable(el, {
   initialValue: { x: 80, y: 80 },
 })
-
 // 웹브라우저 화면 크기 조절
 const wh = ref(null)
-// const brawer_width =
-const wh_style = computed(() => {
-  return 'width:' + String(parseInt(width.value) + parseInt(dx.value)) + 'px;height:' +  String(parseInt(height.value) + parseInt(dy.value)) + 'px;'
-})
-const { width, height } = useElementSize(wh)
 const mouse = reactive(useMouseInElement(wh))
+
+const browser_height = ref(800)
+const browser_width = ref(800)
 
 const pre_mouse_x = ref(0)
 const pre_mouse_y = ref(0)
-function mouseDownHandler() {
-  pre_mouse_x.value = mouse.elementX
-  pre_mouse_y.value = mouse.elementY
-}
 
 const dx = ref(0)
 const dy = ref(0)
+
+function mouseDownHandler() {
+  pre_mouse_x.value = mouse.elementX
+  pre_mouse_y.value = mouse.elementY
+  // 마우스 이동 이벤트 핸들러 등록
+  document.addEventListener('mousemove', mouseMoveHandler);
+
+  // 마우스 업 이벤트 핸들러 등록
+  document.addEventListener('mouseup', mouseUpHandler);
+}
+
 function mouseMoveHandler() {
-  dx.value = pre_mouse_x.value - mouse.elementX
-  dy.value = pre_mouse_y.value - mouse.elementY
+  console.log("browser_width",mouse.elementX-pre_mouse_x.value)
+  browser_width.value = browser_width.value + (mouse.elementX - pre_mouse_x.value)
+  console.log("browser_height",mouse.elementY-pre_mouse_y.value)
+  browser_height.value = browser_height.value + (mouse.elementY - pre_mouse_y.value)
 }
 const mouseUpHandler = function () {
   document.removeEventListener('mousemove', mouseMoveHandler);
@@ -89,8 +96,8 @@ const mouseUpHandler = function () {
   resize: both;
   padding: 0 0 3px;
   -webkit-font-smoothing: antialiased;
-  width: clamp(24rem, 140vh, 200vh);
-  height: clamp(8rem, 80vh, 97vh);
+  width: 140vh;
+  height: 80vh;
 }
 .resizer{
   position: absolute;
